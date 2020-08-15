@@ -1,35 +1,121 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-const inquirer = require("inquirer");
+const Manager = require("./lib/Manager.js");
+const Engineer = require("./lib/Engineer.js");
+const Intern = require("./lib/Intern.js");
+const { prompt } = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./lib/htmlRenderer");
+const render = require("./lib/htmlRenderer.js");
 
+let employee = []
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+const createManager = employee => {
+    prompt ([
+        {
+            type: 'number',
+            name: 'officeNumber',
+            message: 'What is the office number?'
+        }
+    ])
+    .then(({ officeNumber }) => {
+        employee.push(new Manager(name, role, email, id, officeNumber))
+        addMore()
+    })
+    .catch(err => { console.log(err)})
+}
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
+const createEngineer = employee => {
+    prompt ([
+        {
+            type: 'input',
+            name: 'github',
+            message: 'Please type in your GitHub site.'
+        }
+    ])
+    .then(({ github }) => {
+        employee.push(new Engineer(name, role, email, id, github))
+        addMore()
+    })
+    .catch(err => { console.log(err)})
+}
 
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
+const createIntern = employee => {
+    prompt ([
+        {
+            type: 'input',
+            name: 'school',
+            message: 'Please type in your school name.'
+        }
+    ])
+    .then(({ school }) => {
+        employee.push(new Intern(name, role, email, id, school))
+        addMore()
+    })
+    .catch(err => { console.log(err)})
+}
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
+const addMore = () => {
+    prompt ([
+        {
+            type: 'list',
+            name: 'choice',
+            message: "Are there any more employee you would like to add?",
+            choices: ['Yes, I would like to add more.', 'No, thank you.']
+        }
+    ])
+    .then(({ choice }) => {
+        switch (choice) {
+            case 'Yes, I would like to add more.' :
+                staff ()
+                break
+            case 'No, thank you.' :
+                const html = render (employee)
+                fs.writeFileSync(outputPath, html)
+                break
+        }
+    })
+    .catch(err =>{console.log(err)})
+}
 
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+const staff = () => {
+    prompt ([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What's the name of the employee?"
+        },
+        {
+            type: 'list',
+            name: 'role',
+            message: "What is the role of the staff you'd like to create?",
+            choices: ['Manager', 'Engineer', 'Intern']
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What's the email address of the employee?"
+        },
+        {
+            type: 'number',
+            name: 'id',
+            message: "What's the id number of the employee?"
+        },
+    ])
+    .then(res =>{
+        switch (res.role){
+            case 'Manager' :
+                createManager()
+                break
+            case 'Engineer' :
+                createEngineer()
+                break
+            case 'Intern' :
+                createIntern()
+                break
+        }
+    })
+    .catch(err => {console.log(err)})
+}
