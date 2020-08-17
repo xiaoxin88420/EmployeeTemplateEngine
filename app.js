@@ -75,6 +75,7 @@ const addMore = () => {
             case 'No, thank you.' :
                 const html = render (employees)
                 fs.writeFileSync(outputPath, html)
+                console.log("File generated!")
                 break
         }
     })

@@ -1,24 +1,32 @@
 # EmployeeTemplateEngine
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+## Description
+This is a Team Member Contacts Management Table. Easily by using the commend line to key in the info of each employee and the info will be renderred on the team.html page.
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
+## Table of Contents
+  - [Description](#description)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contribution](#contribution)
+  - [Tests](#tests)
+  - [Questions](#questions)
 
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
+## Installation
+1. Simply clone the file from GitHub (https://github.com/xiaoxin88420/EmployeeTemplateEngine.git)
+2. Key in "npm i" on command line to install all the npms.
 
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+## Usage
+1. Key in "node app.js" to start
+2. Answer all the prompted questions.
+3. Choose to create more employee info or not to continue. If "yes", it will bring you back to the first question. If "no", it will end running the code and generate the "team.html" in the output file. 
+
+## Contribution
+I take cash only!
+
+## Tests
+There's a test on file that you could make changes on. In addition, simply key in "npm run test".
+
+## Questions
+myGitHub : www.github.com/xiaoxin88420
+my Emall : xiaoxin88420@hotmail.com
