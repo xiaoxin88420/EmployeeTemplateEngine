@@ -119,3 +119,5 @@ const staff = () => {
     })
     .catch(err => {console.log(err)})
 }
+
+staff()
