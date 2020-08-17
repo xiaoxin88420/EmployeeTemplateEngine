@@ -1,6 +1,7 @@
 const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
+// const Employee = require('./lib/Employee.js')
 const { prompt } = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -10,7 +11,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer.js");
 
-let employee = []
+let employees = []
 
 const createManager = employee => {
     prompt ([
@@ -21,7 +22,7 @@ const createManager = employee => {
         }
     ])
     .then(({ officeNumber }) => {
-        employee.push(new Manager(name, role, email, id, officeNumber))
+        employees.push(new Manager(employee.name, employee.id, employee.email, officeNumber))
         addMore()
     })
     .catch(err => { console.log(err)})
@@ -36,7 +37,7 @@ const createEngineer = employee => {
         }
     ])
     .then(({ github }) => {
-        employee.push(new Engineer(name, role, email, id, github))
+        employees.push(new Engineer(employee.name, employee.id, employee.email, github))
         addMore()
     })
     .catch(err => { console.log(err)})
@@ -51,7 +52,7 @@ const createIntern = employee => {
         }
     ])
     .then(({ school }) => {
-        employee.push(new Intern(name, role, email, id, school))
+        employees.push(new Intern(employee.name, employee.id, employee.email, school))
         addMore()
     })
     .catch(err => { console.log(err)})
@@ -72,7 +73,7 @@ const addMore = () => {
                 staff ()
                 break
             case 'No, thank you.' :
-                const html = render (employee)
+                const html = render (employees)
                 fs.writeFileSync(outputPath, html)
                 break
         }
@@ -104,16 +105,16 @@ const staff = () => {
             message: "What's the id number of the employee?"
         },
     ])
-    .then(res =>{
-        switch (res.role){
+    .then(employee =>{
+        switch (employee.role){
             case 'Manager' :
-                createManager()
+                createManager(employee)
                 break
             case 'Engineer' :
-                createEngineer()
+                createEngineer(employee)
                 break
             case 'Intern' :
-                createIntern()
+                createIntern(employee)
                 break
         }
     })
